@@ -4,6 +4,8 @@ Welcome, this is an open source cybersecurity awareness bot.
 
 You can get a sample of information related to an ip using `/get-ip-info` on discord
 
+You can add a live version [here](https://discord.com/api/oauth2/authorize?client_id=1143639792081449020&permissions=0&scope=bot%20applications.commands)
+
 # Requirements
 
 Node.js 16.9.0 or newer is required.
