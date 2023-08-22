@@ -64,6 +64,7 @@ module.exports = class PingCommand extends BaseSlashCommand {
   }
   createEmbedFromIPInfo(data) {
     let embed = new EmbedBuilder();
+    let date = new Date(data.portable.timezone.current_time);
     embed.setTitle(`${data.country.name} | ${data.country.tourism_slogan}`);
     //embed.setColor('RANDOM');
     embed.setAuthor({
@@ -84,7 +85,7 @@ module.exports = class PingCommand extends BaseSlashCommand {
           : 'N/A'
       }\n**TimeZone**: ${data.portable.timezone.name} | **UTC offset** ${
         data.portable.timezone.utc_offsetStr
-      }\n**Local Time**: ${data.portable.timezone.current_time}`
+      }\n**Local Time**: ${date.getHours()}:${date.getMinutes()}`
     );
     embed.addFields([
       { name: ' ', value: ' ' },
