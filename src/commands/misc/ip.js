@@ -85,7 +85,7 @@ module.exports = class PingCommand extends BaseSlashCommand {
           : 'N/A'
       }\n**TimeZone**: ${data.portable.timezone.name} | **UTC offset** ${
         data.portable.timezone.utc_offsetStr
-      }\n**Local Time**: ${date.getHours()}:${date.getMinutes()}`
+      }\n**Local Time**: ${date}`
     );
     embed.addFields([
       { name: ' ', value: ' ' },
