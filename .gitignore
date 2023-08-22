@@ -1,0 +1,7 @@
+# .gitignore files specify files that should not be pushed to a github repository for security/spam reasons.
+
+# enviroment variables and secrets
+.env
+# lib files
+node_modules
+package-lock.json
