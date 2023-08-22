@@ -94,7 +94,7 @@ module.exports = class PingCommand extends BaseSlashCommand {
       // Seperate ip data and developer notice for readability's sake.
       {
         name: 'Developer Notice',
-        value: `This is merely a sample of what a malicous user could retrieve, Stay safe out there friend. \n\nP.S. This ip is not stored anywhere in this bot. you can view its source code here [github.com/Pax-0](https://github.com/Pax-0)`,
+        value: `This is merely a sample of what a malicous user could retrieve, Stay safe out there friend. \n\nP.S. This ip is not stored anywhere in this bot. you can view its source code here [github.com/Pax-0/ipbot](https://github.com/Pax-0/ipbot)`,
       },
     ]);
     embed.setTimestamp();
