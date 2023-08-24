@@ -6,7 +6,7 @@ require('dotenv').config();
 // set the header to "authorize" our account using API key
 axios.defaults.headers.common['X-BLOBR-KEY'] = process.env.GEOIPKey;
 // create a pattern of what an ipv4 address should look like
-const ipAddressRegex = /d{1,3}.d{1,3}.d{1,3}.d{1,3}/g;
+const ipAddressRegex = /\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/g;
 
 module.exports = class PingCommand extends BaseSlashCommand {
   constructor() {
