@@ -19,13 +19,14 @@ module.exports = class PingCommand extends BaseSlashCommand {
 
     // grab the ip from the user
     let ip = interaction.options.getString('ip', true);
-
+    /*
     // make sure the user input follows the syntax of an IP address.
     const isValidIP = ipAddressRegex.test(ip);
     if (!isValidIP)
       return interaction.editReply({
         content: 'Please enter a valid IP address.',
       });
+      */
 
     // format our request to follow GEOAPI's expected syntax.
     let url = `${process.env.GEOAPIENDPOINT}?ip=${ip}`;
