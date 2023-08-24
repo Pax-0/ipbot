@@ -5,8 +5,9 @@ const { default: axios } = require('axios');
 require('dotenv').config();
 // set the header to "authorize" our account using API key
 axios.defaults.headers.common['X-BLOBR-KEY'] = process.env.GEOIPKey;
+// create a pattern of what an ipv4 address should look like
+const ipAddressRegex = /d{1,3}.d{1,3}.d{1,3}.d{1,3}/g;
 
-//TODO add ip address validation.
 module.exports = class PingCommand extends BaseSlashCommand {
   constructor() {
     super('get-ip-info');
@@ -15,9 +16,18 @@ module.exports = class PingCommand extends BaseSlashCommand {
   async run(client, interaction) {
     // allow additional time to process user's request, discord only gives 3 seconds to respond otherwise.
     await interaction.deferReply({ ephemeral: true });
+
     // grab the ip from the user
     let ip = interaction.options.getString('ip', true);
-    // formar our request to follow GEOAPI's expected syntax.
+
+    // make sure the user input follows the syntax of an IP address.
+    const isValidIP = ipAddressRegex.test(ip);
+    if (!isValidIP)
+      return interaction.editReply({
+        content: 'Please enter a valid IP address.',
+      });
+
+    // format our request to follow GEOAPI's expected syntax.
     let url = `${process.env.GEOAPIENDPOINT}?ip=${ip}`;
     let data;
     // use a trycatch block to catch any unexpected errors.
@@ -52,13 +62,11 @@ module.exports = class PingCommand extends BaseSlashCommand {
       .setDescription(
         'check how much info a malicious user can retrieve on you if you only visit their site. '
       )
-      .addStringOption(
-        (option) =>
-          option
-            .setName('ip')
-            .setDescription('the ip address to get info from.')
-            .setRequired(true)
-            .setMinLength(7) // 1.1.1.1 basic ip validation
+      .addStringOption((option) =>
+        option
+          .setName('ip')
+          .setDescription('the ip address to get info from.')
+          .setRequired(true)
       )
       .toJSON();
   }
