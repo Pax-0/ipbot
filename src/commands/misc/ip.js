@@ -61,7 +61,36 @@ module.exports = class PingCommand extends BaseSlashCommand {
       });
     }
   }
+  parseDateAndTime(localtime) {
+    let result = { date: null, time: null, amPm: '' };
+    if (!localtime || !localtime.length) return result;
 
+    let arr = localtime.split('T');
+
+    result.date = arr[0];
+
+    if (arr[1].includes('+')) {
+      result.time = arr[1].split('+')[0];
+    } else {
+      result.time = arr[1].split('-')[0];
+    }
+    if (result.time && result.time.length) {
+      let hours = result.time.split(':')[0];
+      if (!parseInt(hours)) {
+        result.amPm = '';
+        return result;
+      }
+      result.amPm = parseInt(hours) > 12 ? 'PM' : 'AM';
+      if (parseInt(hours) > 12) {
+        let nonMilitaryHours = parseInt(hours) - 12;
+        let newTime = result.time.split(':');
+        newTime[0] = `0${nonMilitaryHours}`;
+        result.time = newTime.join(':');
+        return result;
+      }
+    }
+    return result;
+  }
   getSlashCommandJSON() {
     // format our command into the structure discord expects
     return new SlashCommandBuilder()
@@ -80,6 +109,9 @@ module.exports = class PingCommand extends BaseSlashCommand {
   createEmbedFromIPInfo(data) {
     // some properties are not guarenteed by the API, so default to others if possible or "N/A"
     let embed = new EmbedBuilder();
+    let parsedTimeAndDate = this.parseDateAndTime(
+      data.portable.timezone.current_time
+    ) ?? { date: 'N/A', time: 'N/A' };
     embed.setTitle(`${data.country.name} | ${data.country.tourism_slogan}`);
     //embed.setColor('RANDOM');
     embed.setAuthor({
@@ -107,7 +139,9 @@ module.exports = class PingCommand extends BaseSlashCommand {
           : 'N/A'
       }\n**TimeZone**: ${data.portable.timezone.name} | **UTC offset** ${
         data.portable.timezone.utc_offsetStr
-      }\n**Local Time**: ${data.portable.timezone.current_time}`
+      }\n**Local Time**: ${parsedTimeAndDate.time} ${parsedTimeAndDate.amPm} ${
+        parsedTimeAndDate.date
+      }`
     );
     embed.addFields([
       { name: ' ', value: ' ' },
