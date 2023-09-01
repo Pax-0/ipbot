@@ -6,6 +6,8 @@ You can get a sample of information related to an ip using `/get-ip-info` on dis
 
 You can add a live version [here](https://discord.com/api/oauth2/authorize?client_id=1143639792081449020&permissions=0&scope=bot%20applications.commands)
 
+This project was created as an entry for [ThatAPICompany](https://thatapicompany.com)'s monthly competition join their discord [here](https://discord.gg/NdszE5z6va) if you're interested in future ones
+
 # Requirements
 
 Node.js 16.9.0 or newer is required.
